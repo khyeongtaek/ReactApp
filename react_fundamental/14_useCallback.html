@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <title>useCallback</title>
 </head>
+
 <body>
 
-<!--
+  <!--
 1. React.useCallback()
   1) 리렌더링 시 함수 정의는 항상 재할당됩니다.
   2) 함수형 컴포넌트에서 함수 자체를 메모이제이션(memoization)하여 불필요한 함수 재생성을 방지하고, 성능을 최적화하는 훅(Hooks) 입니다.
@@ -39,5 +41,47 @@
       - 의존성 배열에 특정 값을 넣으면 그 값이 변경될 때만 callback 함수가 생성됩니다.
 -->
 
+  <div id="root1"></div>
+  <script type="text/babel">
+
+    function UseCallbackComp() {
+      const { useState, useEffect, useCallback } = React;
+
+      const [number, setNumber] = useState(0);
+      const [text, setText] = useState('');
+
+      const printNumber = useCallback(() =>
+        console.log(number)
+        , [number])
+
+
+      useEffect(() => {
+        printNumber();
+      }, [printNumber]);
+
+      return (
+        <>
+          <input
+            type="number"
+            value={number}
+            onChange={e => setNumber(Number(e.target.value))}
+          />
+          <br />
+          <input
+            type="text"
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
+        </>
+      )
+
+    }
+
+    ReactDOM.createRoot(document.getElementById('root1')).render(<UseCallbackComp />);
+
+
+  </script>
+
 </body>
+
 </html>

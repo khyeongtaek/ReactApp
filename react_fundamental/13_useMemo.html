@@ -49,6 +49,139 @@
   그렇지 않으면 객체가 가진 값의 변경이 없더라도 항상 useEffect()이 동작하는 문제가 발생합니다.
 -->
 
+  <div id="root1"></div>
+
+  <script type="text/babel">
+
+    const OverheadComp = () => {
+
+      const [number1, setNumber1] = React.useState(0);
+      const [number2, setNumber2] = React.useState(0);
+
+      const operation1 = (n) => {
+        for (let i = 0; i < 1999999999; i++);
+        return n + 1;
+      }
+      const operation2 = (n) => {
+        return n + 1;
+      }
+
+      const result1 = operation1(number1);
+      const result2 = operation2(number2);
+
+      return (
+        <>
+          <h3>오버헤드 연산</h3>
+          <input
+            type="number"
+            value={number1}
+            onChange={e => setNumber1(Number(e.target.value))}
+          />
+          <div>{number1} + 1 = {result1}</div>
+          <hr />
+          <h3>일반 연산</h3>
+          <input
+            type="number"
+            value={number2}
+            onChange={e => setNumber2(Number(e.target.value))}
+          />
+          <div>{number2} + 1 = {result2}</div>
+        </>
+      )
+    }
+
+    // ReactDOM.createRoot(document.getElementById('root1')).render(<OverheadComp />);
+
+  </script>
+
+
+
+  <div id="root2"></div>
+
+  <script type="text/babel">
+
+    const UseMemoComp = () => {
+
+      const [number1, setNumber1] = React.useState(0);
+      const [number2, setNumber2] = React.useState(0);
+
+      const operation1 = (n) => {
+        for (let i = 0; i < 1999999999; i++);
+        return n + 1;
+      }
+      const operation2 = (n) => {
+        return n + 1;
+      }
+
+      const result1 = React.useMemo(() => {
+        return operation1(number1);
+      }, [number1]);
+      const result2 = operation2(number2);
+
+      return (
+        <>
+          <h3>오버헤드 연산</h3>
+          <input
+            type="number"
+            value={number1}
+            onChange={e => setNumber1(Number(e.target.value))}
+          />
+          <div>{number1} + 1 = {result1}</div>
+          <hr />
+          <h3>일반 연산</h3>
+          <input
+            type="number"
+            value={number2}
+            onChange={e => setNumber2(Number(e.target.value))}
+          />
+          <div>{number2} + 1 = {result2}</div>
+        </>
+      )
+    }
+
+    ReactDOM.createRoot(document.getElementById('root2')).render(<UseMemoComp />);
+
+  </script>
+  <hr>
+  <div id="root3"></div>
+
+  <script type="text/babel">
+
+    function ObjectTypeProblem() {
+      const [sale, setSale] = React.useState(false);
+      const [number, setNumber] = React.useState(0);
+
+      const tv = React.useMemo(() => {
+        return {
+          brand: 'samsung',
+          size: 75,
+          sale: sale ? '할인가' : '정상가',
+        }
+      }, [sale]);
+
+      React.useEffect(() => {
+        console.log(tv);
+      }, [tv]);
+
+      return (
+        <>
+          <button onClick={e => setSale(!sale)} >할인변경</button>
+          <br />
+          <input
+            type="number"
+            value={number}
+            onChange={e => setNumber(Number(e.target.value))}
+
+          />
+        </>
+      )
+    }
+
+    ReactDOM.createRoot(document.getElementById('root3')).render(<ObjectTypeProblem />);
+
+
+  </script>
+
 </body>
 
 </html>

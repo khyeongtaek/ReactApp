@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <title>useRef</title>
 </head>
+
 <body>
 
-<!--
+  <!--
 1. React.useRef()
   1) 함수형 컴포넌트에서 DOM 요소에 직접 접근하거나, 리렌더링과 무관하게 값을 저장할 때 사용하는 훅(Hooks) 입니다.
   2) useRef에 의해서 반환된 값은 변경되더라도 리렌더링이 되지 않습니다.
@@ -26,6 +28,62 @@
     (2) initialValue
       - 반환 객체 ref의 current 프로퍼티에 저장하는 초기값입니다.
 -->
+  <div id="root1"></div>
+  <script type="text/babel">
+
+    function UseRef1() {
+      const { useRef, useState } = React;
+
+      const [temp, setTemp] = useState(false);
+
+      const objNumber = useRef(0);
+
+      return (
+        <>
+          <button onClick={e => {
+            objNumber.current += 1
+            if (objNumber.current % 5 === 0) setTemp(!temp);
+            console.log(objNumber);
+          }}>objNumber증가</button>
+          <div>objNumber: {objNumber.current}</div>
+        </>
+      )
+
+    }
+    ReactDOM.createRoot(document.getElementById('root1')).render(<UseRef1 />);
+
+  </script>
+
+  <hr>
+
+  <div id="root2"></div>
+  <script type="text/babel">
+
+    function UseRef2() {
+      const { useRef, useEffect } = React;
+
+      const inputRef = useRef();
+
+      useEffect(() => {
+        console.log(inputRef.current);
+        inputRef.current.focus();
+        inputRef.current.value = 3;
+      }, [])
+
+      return (
+        <>
+          <input
+            type="text"
+            ref={inputRef}
+          />
+        </>
+      )
+
+    }
+    ReactDOM.createRoot(document.getElementById('root2')).render(<UseRef2 />);
+
+  </script>
 
 </body>
+
 </html>
