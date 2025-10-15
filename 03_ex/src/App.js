@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import Layout from "./pages/Layout";
+import Board from "./pages/Board";
+import User from "./pages/User";
 import {Link, Route, Routes} from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-import General from "./pages/General";
-import Setting from "./pages/Setting";
 
 function App() {
     return (
@@ -11,14 +11,15 @@ function App() {
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
                 <nav>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/">Layout</Link>
                 </nav>
                 <Routes>
-                    <Route path="/dashboard" element={<Dashboard/>}>
-                        <Route path="general" element={<General/>}/>
-                        <Route path="setting" element={<Setting/>}/>
+                    <Route path="/" element={<Layout/>}>
+                        <Route path="board" element={<Board/>}/>
+                        <Route path="user" element={<User/>}/>
                     </Route>
                 </Routes>
+
             </header>
         </div>
     );
