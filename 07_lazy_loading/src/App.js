@@ -54,7 +54,7 @@ function App() {
       </header>
       <main>
         {/* Suspence 내부에서 라우트 작업을 수행 */}
-        <Suspense fallback={Loading()}>
+        <Suspense fallback={<Loading/>}>
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/about" element={<About/>}/>
