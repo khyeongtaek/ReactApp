@@ -53,6 +53,8 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(readOnly = true)
     @Override
     public Page<BoardDTO> getBoardList(Pageable pageable) {
+        pageable = pageable.withPage(pageable.getPageNumber() - 1);
+
         return boardRepository.findAll(pageable)
                 .map(BoardDTO::toDTO);
     }

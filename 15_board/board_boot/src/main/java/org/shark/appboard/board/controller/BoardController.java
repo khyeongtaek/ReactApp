@@ -20,7 +20,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<BoardDTO>> saveBoard(BoardDTO boardDTO) {
+    public ResponseEntity<ResponseDTO<BoardDTO>> saveBoard(@RequestBody BoardDTO boardDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
@@ -33,7 +33,7 @@ public class BoardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO<BoardDTO>> updateBoard(BoardDTO boardDTO, @PathVariable Long id) {
+    public ResponseEntity<ResponseDTO<BoardDTO>> updateBoard(@RequestBody BoardDTO boardDTO, @PathVariable Long id) {
         boardDTO.setBid(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -53,7 +53,7 @@ public class BoardController {
                 .status(HttpStatus.OK)
                 .body(
                         ResponseDTO.<Void>builder()
-                                .status(200)
+                                .status(204)
                                 .message("게시글 삭제 성공")
                                 .build()
                 );
@@ -74,11 +74,9 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO<Page<BoardDTO>>> getBoardList(
-            @PageableDefault(page = 1, size = 10, sort = "bid", direction = Sort.Direction.DESC)
+            @PageableDefault(page = 1, size = 10, sort = "createdAt", direction = Sort.Direction.DESC)
             Pageable pageable
     ) {
-        pageable = pageable.withPage(pageable.getPageNumber() - 1);
-
         return ResponseEntity.ok(
                 ResponseDTO.<Page<BoardDTO>>builder()
                         .status(200)
