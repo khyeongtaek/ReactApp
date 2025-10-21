@@ -34,7 +34,7 @@ public class BoardServiceImpl implements BoardService {
 
             return BoardDTO.toDTO(boardRepository.save(board));
         } else {
-            return null;
+            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
         }
     }
 
@@ -47,7 +47,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDTO getBoard(Long bid) {
         Optional<Board> boardOptional = boardRepository.findById(bid);
-        return boardOptional.map(BoardDTO::toDTO).orElse(null);
+        return boardOptional.map(BoardDTO::toDTO).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
     }
 
     @Transactional(readOnly = true)

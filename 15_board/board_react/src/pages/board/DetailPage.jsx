@@ -1,13 +1,10 @@
 import { useParams } from 'react-router-dom';
+import DetailComp from "../../components/board/DetailComp";
 
 const DetailPage = () => {
   // "/boards/detail/:bid" 경로변수 값 꺼내기
   const { bid } = useParams();
-  return (
-    <div>
-      <h3>{ bid }번 게시글</h3>
-    </div>
-  );
+  return <DetailComp bid={bid}/>
 };
 
 export default DetailPage;
