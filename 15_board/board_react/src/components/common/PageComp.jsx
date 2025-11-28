@@ -5,7 +5,7 @@ const PageComp = ({ onPageChange, currentPageParams, pageData }) => {
   }
 
   // pageData에 저장된 요소 꺼내기
-  const {
+  const { 
     //first,        // 첫 페이지 여부
     //last,         // 마지막 페이지 여부
     //totalElements,// 전체 게시글 수
@@ -16,7 +16,7 @@ const PageComp = ({ onPageChange, currentPageParams, pageData }) => {
 
   // 부트 서버가 제공한 현재 페이지 번호는 0으로 시작하므로 1로 조정함
   const currentPage = number + 1;
-
+   
   // 페이지 번호를 배열로 만들어서 반환하는 함수
   const getPageNumbers = () => {
     const pagePerBlock = 5;

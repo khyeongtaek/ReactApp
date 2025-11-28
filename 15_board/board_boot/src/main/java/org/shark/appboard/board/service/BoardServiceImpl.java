@@ -1,6 +1,5 @@
 package org.shark.appboard.board.service;
 
-import lombok.RequiredArgsConstructor;
 import org.shark.appboard.board.dto.BoardDTO;
 import org.shark.appboard.board.entity.Board;
 import org.shark.appboard.board.repository.BoardRepository;
@@ -9,53 +8,61 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Slf4j
+@Transactional
 public class BoardServiceImpl implements BoardService {
 
-    private final BoardRepository boardRepository;
+  private final BoardRepository boardRepository;
+  
+  @Transactional(readOnly = true)
+  @Override
+  public Page<BoardDTO> getAllBoards(Pageable pageable) {
+    // 페이징 처리: 클라이언트는 page=1, JpaRepository는 page=0
+    pageable = pageable.withPage(pageable.getPageNumber() - 1);
+    log.info("페이지: {}, 크기: {}", pageable.getPageNumber(), pageable.getPageSize());
+    Page<Board> boardPage = boardRepository.findAll(pageable);
+    return boardPage.map(BoardDTO::toDTO);
+  }
 
-    @Override
-    public BoardDTO saveBoard(BoardDTO boardDTO) {
-        return BoardDTO.toDTO(boardRepository.save(boardDTO.toEntity()));
-    }
+  @Transactional(readOnly = true)
+  @Override
+  public BoardDTO getBoardById(Long bid) {
+    log.info("게시글조회 - bid: {}", bid);
+    Board board = boardRepository.findById(bid)
+        .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. bid: " + bid));
+    return BoardDTO.toDTO(board);
+  }
 
-    @Override
-    public BoardDTO updateBoard(BoardDTO boardDTO) {
-        Optional<Board> boardOptional = boardRepository.findById(boardDTO.getBid());
+  @Override
+  public BoardDTO createBoard(BoardDTO boardDTO) {
+    log.info("게시글 생성 - 제목: {}", boardDTO.getTitle());
+    Board board = boardDTO.toEntity();
+    Board saved = boardRepository.save(board);
+    log.info("게시글 생성 완료: {}", saved);
+    return BoardDTO.toDTO(saved);
+  }
 
-        if (boardOptional.isPresent()) {
-            Board board = boardOptional.get();
-            board.update(boardDTO.getTitle(), boardDTO.getContent());
+  @Override
+  public BoardDTO updateBoard(Long bid, BoardDTO boardDTO) {
+    log.info("게시글 수정 - bid: {}, 제목: {}", bid, boardDTO.getTitle());
+    Board foundBoard = boardRepository.findById(bid)
+        .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. bid: " + bid));
+    foundBoard.updateBoard(boardDTO.getTitle(), boardDTO.getContent());
+    return BoardDTO.toDTO(foundBoard);
+  }
 
-            return BoardDTO.toDTO(boardRepository.save(board));
-        } else {
-            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다.");
-        }
-    }
+  @Override
+  public void deleteBoard(Long bid) {
+    log.info("게시글 삭제 - bid: {}", bid);
+    Board foundBoard = boardRepository.findById(bid)
+        .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. bid: " + bid));
+    boardRepository.delete(foundBoard);
+    log.info("게시글 삭제 완료 - bid: {}", bid);
+  }
 
-    @Override
-    public void deleteBoard(Long bid) {
-        boardRepository.deleteById(bid);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public BoardDTO getBoard(Long bid) {
-        Optional<Board> boardOptional = boardRepository.findById(bid);
-        return boardOptional.map(BoardDTO::toDTO).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Page<BoardDTO> getBoardList(Pageable pageable) {
-        pageable = pageable.withPage(pageable.getPageNumber() - 1);
-
-        return boardRepository.findAll(pageable)
-                .map(BoardDTO::toDTO);
-    }
 }

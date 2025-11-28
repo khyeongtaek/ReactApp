@@ -33,10 +33,10 @@
 ```
 
 **문제점:**
-- 각 요소마다 `getElementById`로 DOM을 직접 찾아야 함
-- 상태(데이터)가 어디에 있는지 불명확 (input의 value? display의 textContent?)
-- 화면 업데이트를 개발자가 직접 명령해야 함
-- DOM 조작 코드가 곳곳에 흩어짐
+- 각 요소마다 `getElementById`로 DOM을 직접 찾아야 합니다.
+- 상태(데이터)가 어디에 있는지 불명확합니다. (input의 value? display의 textContent?)
+- 화면 업데이트를 개발자가 직접 명령해야 합니다.
+- DOM 조작 코드가 곳곳에 흩어집니다.
 
 ---
 
@@ -73,10 +73,10 @@ export default Example1;
 ```
 
 **장점:**
-- DOM을 직접 찾을 필요 없음
-- 상태는 `message` 변수 하나에만 존재 (단일 진실 공급원)
-- 상태가 변하면 React가 자동으로 화면 업데이트
-- 코드가 간결하고 이해하기 쉬움
+- DOM을 직접 찾을 필요가 없습니다.
+- 상태는 `message` 변수 하나에만 존재합니다. (단일 진실 공급원)
+- 상태가 변하면 React가 자동으로 UI를 업데이트합니다.
+- 코드가 간결하고 이해하기 쉽습니다.
 
 ---
 
@@ -329,7 +329,7 @@ return <h5>{message}</h5>;
 
 **왜 Virtual DOM이 필요할까?**
 
-실제 DOM 조작은 매우 **비용이 큰** 작업입니다:
+실제 DOM 조작은 매우 **비용이 큰** 작업입니다.
 
 ```javascript
 // Vanilla JS - 느린 DOM 조작
@@ -405,7 +405,7 @@ setTodos([...todos, '할일3']);
 
 #### 3️⃣ **Diffing 알고리즘**
 
-React는 이전 Virtual DOM과 새 Virtual DOM을 **비교**합니다:
+React는 이전 Virtual DOM과 새 Virtual DOM을 **비교**합니다.
 
 ```
 [비교 결과]
@@ -533,7 +533,7 @@ function Example1() {
 
 ### 정리: Virtual DOM과 React의 이점
 
-앞서 설명한 React의 모든 특징들은 Virtual DOM과 연결됩니다:
+앞서 설명한 React의 모든 특징들은 Virtual DOM과 연결됩니다.
 
 ✅ **자동 동기화** → Virtual DOM이 변경사항 추적  
 ✅ **선언적 프로그래밍** → Virtual DOM이 실제 DOM 조작 추상화  

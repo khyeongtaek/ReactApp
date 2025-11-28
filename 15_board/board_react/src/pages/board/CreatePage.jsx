@@ -4,7 +4,7 @@ const CreatePage = () => {
   return (
     <div>
       <h3>게시글 등록</h3>
-      <FormComp isUpdate={false}/>
+      <FormComp isUpdate={false} />
     </div>
   );
 };

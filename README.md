@@ -212,14 +212,14 @@ npm start
 
 ```bash
 # 1. 프로젝트 만들기
-npm create vite@latest [프로젝트명] -- --template react
+npx create-vite@latest [프로젝트명] --template react
 # Use rolldown-vite? : No
 # Install with npm and start now? : Yes
 
 # 2. 프로젝트 폴더로 이동
 cd [프로젝트경로]
 
-# 3. 의존성 설치 (위에 Install with npm and start now를 Yes할 경우 생략 가능)
+# 3. 의존성 설치 (1단계 Install with npm and start now를 Yes할 경우 생략 가능)
 npm install
 
 # 4. 프로젝트 실행 (개발 서버 실행)

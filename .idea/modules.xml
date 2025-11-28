@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ReactApp.iml" filepath="$PROJECT_DIR$/.idea/ReactApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../finalproject/startup_FE/.idea/startup_FE.iml" filepath="$PROJECT_DIR$/../finalproject/startup_FE/.idea/startup_FE.iml" />
     </modules>
   </component>
 </project>

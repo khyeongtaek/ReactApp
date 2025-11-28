@@ -6,9 +6,8 @@ const UpdatePage = () => {
   const { bid } = useParams();
   return (
     <div>
-        <h3>게시글 수정</h3>
-        <FormComp isUpdate={true} bid={bid}/>
-      
+      <h3>게시글 수정</h3>
+      <FormComp isUpdate={true} bid={bid} />
     </div>
   );
 };

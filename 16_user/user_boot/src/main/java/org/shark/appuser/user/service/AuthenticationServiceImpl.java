@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     
     // 인증 성공 시 사용자 정보 조회
     User foundUser = userRepository.findByEmail(request.getEmail())
-                        .orElseThrow(() -> new RuntimeException(request.getEmail() + "은(는) 이미 존재하지 않습니다."));
+                        .orElseThrow(() -> new RuntimeException(request.getEmail() + "은(는) 존재하지 않습니다."));
     
     // JWT 토큰 생성 (AccessToken, RefreshToken)
     String accessToken = jwtService.generateToken(null, foundUser);

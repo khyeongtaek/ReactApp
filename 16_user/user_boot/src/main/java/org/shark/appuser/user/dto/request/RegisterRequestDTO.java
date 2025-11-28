@@ -1,7 +1,5 @@
 package org.shark.appuser.user.dto.request;
 
-import org.shark.appuser.user.entity.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
